@@ -9,6 +9,8 @@ const loader = require("sass-loader")
 const isProd = process.env.NODE_ENV === "production"
 const isDev = !isProd
 
+console.log(isProd)
+
 const filename = (ext) => (isDev ? `bundle.${ext}` : `bundle[hash].${ext}`)
 
 const jsLoaders = () => {
