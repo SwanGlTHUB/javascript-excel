@@ -1,5 +1,20 @@
-$red: blue;
+@import "~normalize.css";
+@import "formula";
+@import "header";
+@import "table";
+@import "toolbar";
+@import 'dashboard';
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-    background: $red;
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
+}
+
+.excel {
+    color: gray;
 }

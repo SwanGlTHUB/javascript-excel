@@ -52,6 +52,9 @@ module.exports = {
     devtool: isDev ? "source-map" : false,
     devServer: {
         port: 3000,
+        contentBase: ["./src", "./dist"], // both src and output dirs
+        watchContentBase: true,
+        inline: true,
         hot: true,
     },
     plugins: [
