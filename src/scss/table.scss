@@ -1,53 +1,67 @@
 @import "variables";
 @import "mixins";
+
 .excel__table {
-    position: absolute;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: $header-height + $toolbar-height + $formula-height;
+  overflow-x: auto;
+  padding-bottom: 2px;
+
+  .row {
     display: flex;
-    flex-direction: column;
-    right: 0;
-    left: 0;
-    top: $header-height + $toolbar-height + $formula-height;
-    overflow: auto;
-    .row {
-        display: flex;
+    flex-direction: row;
+    min-height: 20px;
+    height: $row-height;
+  }
+
+  .row-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: $info-cell-width;
+    height: 100%;
+    border: 1px solid $border-color;
+    background: #f8f9fa;
+    border-top: none;
+  }
+
+  .row-data {
+    display: flex;
+  }
+
+  .column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8f9fa;
+    min-width: 40px;
+    width: $cell-width;
+    border: 1px solid $border-color;
+    border-top: 0;
+    border-left: 0;
+    height: 100%;
+  }
+
+  .cell {
+    min-width: 40px;
+    padding: 5px;
+    width: $cell-width;
+    height: 100%;
+    border: 1px solid #e2e3e3;
+    border-top: 0;
+    border-left: 0;
+    color: #111;
+    white-space: nowrap;
+    outline: none;
+
+
+    &.selected {
+      border: none;
+      outline: 2px solid #3c74ff;
+      z-index: 2;
     }
-    .row-info {
-        display: flex;
-        justify-content: center;
-        /* align horizontal */
-        align-items: center;
-        border: 1px solid $border-color;
-        background-color: #f8f9fa;
-        border-left: 0px;
-        border-top: 0px;
-        min-width: $row-width;
-        width: 46px;
-        height: $row-height;
-    }
-    .cell {
-        color: black;
-        display: flex;
-        justify-content: center;
-        /* align horizontal */
-        align-items: center;
-        border: 1px solid $border-color;
-        border-left: 0px;
-        border-top: 0px;
-        min-width: 128px;
-        width: $row-data-width;
-        height: $row-height;
-        font-size: 14px;
-        font-weight: 600;
-        outline: none;
-    }
-    .column {
-        background-color: #f8f9fa;
-        font-size: 10px;
-        color: gray;
-    }
-    .selected {
-        z-index: 2;
-        border-width: 0px;
-        outline: 2px solid blue;
-    }
+  }
+
 }

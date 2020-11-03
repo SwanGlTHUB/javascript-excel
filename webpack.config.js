@@ -14,14 +14,12 @@ console.log(isProd)
 const filename = (ext) => (isDev ? `bundle.${ext}` : `bundle[hash].${ext}`)
 
 const jsLoaders = () => {
-    const loaders = [
-        {
-            loader: "babel-loader",
-            options: {
-                presets: ["@babel/preset-env"],
-            },
+    const loaders = [{
+        loader: "babel-loader",
+        options: {
+            presets: ["@babel/preset-env"],
         },
-    ]
+    }, ]
 
     if (isDev) {
         loaders.push("eslint-loader")
@@ -64,23 +62,19 @@ module.exports = {
             minify: { removeComments: isProd, collapseWhitespace: isProd },
         }),
         new CopyPlugin({
-            patterns: [
-                {
-                    from: path.resolve(__dirname, "src/favicon.ico"),
-                    to: path.resolve(__dirname, "dist"),
-                },
-            ],
+            patterns: [{
+                from: path.resolve(__dirname, "src/favicon.ico"),
+                to: path.resolve(__dirname, "dist"),
+            }, ],
         }),
         new MiniCssExtractPlugin({
             filename: filename("css"),
         }),
     ],
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.s[ac]ss$/i,
-                use: [
-                    {
+                use: [{
                         loader: MiniCssExtractPlugin.loader,
                         options: { hmr: isDev, reloadAll: true },
                     },
@@ -95,6 +89,7 @@ module.exports = {
                     loader: "babel-loader",
                     options: {
                         presets: ["@babel/preset-env"],
+                        plugins: ["@babel/plugin-proposal-class-properties"],
                     },
                 },
             },
