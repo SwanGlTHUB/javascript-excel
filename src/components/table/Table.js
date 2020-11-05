@@ -7,15 +7,23 @@ import {
     triggerXProcessor,
     triggerYProcessor,
 } from "./triggerLogic"
+import { TableSelection } from "./TableSelection"
+import { ROWS_COUNT } from "../variables"
 
 export class Table extends ExcelComponent {
     static className = "excel__table"
 
     constructor($root) {
+        Table.initTableSelection($root)
         super($root, {
-            name: "Formula",
+            name: "Table",
             listeners: ["mousedown", "mouseup"],
         })
+    }
+
+    static initTableSelection($root) {
+        const tableSelection = new TableSelection($root)
+        tableSelection.init()
     }
 
     onMousemove(event) {
@@ -48,6 +56,6 @@ export class Table extends ExcelComponent {
     }
 
     toHTML() {
-        return createTable(20)
+        return createTable(ROWS_COUNT)
     }
 }

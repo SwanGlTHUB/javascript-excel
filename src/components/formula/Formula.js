@@ -1,28 +1,37 @@
-import {ExcelComponent} from '@core/ExcelComponent'
+import { ExcelComponent } from "@core/ExcelComponent"
+import { $ } from "../../core/dom"
+import { elementExistInWindow } from "../../core/windowFunctions"
+import { setSelectedCellValue } from "../table/TableSelection.logic"
 
 export class Formula extends ExcelComponent {
-  static className = 'excel__formula'
+    static className = "excel__formula"
 
-  constructor($root) {
-    super($root, {
-      name: 'Formula',
-      listeners: ['input', 'click']
-    })
-  }
+    static getFormulaInputDOM() {
+        return $("[data-input-type=formulaInput]")
+    }
 
-  toHTML() {
-    return `
+    constructor($root) {
+        super($root, {
+            name: "Formula",
+            listeners: ["input", "click"],
+        })
+    }
+
+    toHTML() {
+        return `
       <div class="info">fx</div>
-      <div class="input" contenteditable spellcheck="false"></div>
+      <div class="input" data-input-type=formulaInput contenteditable spellcheck="false"></div>
     `
-  }
+    }
 
-  onInput(event) {
-    console.log(this.$root)
-    console.log('Formula: onInput', event.target.textContent.trim())
-  }
+    onInput(event) {
+        const formulaInput = event.target.innerHTML
+        if (elementExistInWindow("selectedCell")) {
+            setSelectedCellValue(formulaInput)
+        }
+    }
 
-  onClick() {
-    console.log('mk')
-  }
+    onClick() {
+        console.log("mk")
+    }
 }
