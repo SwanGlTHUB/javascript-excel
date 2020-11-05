@@ -33,6 +33,7 @@ export function resizeTypeX(event) {
     if (window.startX === null) {
         window.startX = event.clientX
     }
+
     const column = window.selectedColumn
     const delta = event.clientX - window.startX
     const startColumnWidth = window.startColumnWidth
@@ -45,6 +46,7 @@ export function resizeTypeY(event) {
     if (window.startY === null) {
         window.startY = event.clientY
     }
+
     const row = window.selectedRow.parentNode
     const delta = event.clientY - window.startY
     const startColumnHeight = window.startColumnHeight

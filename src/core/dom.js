@@ -27,6 +27,16 @@ class Dom {
         this.$el.removeEventListener(eventType, callback)
     }
 
+    addStyles(styles) {
+        Object.keys(styles).forEach((key) => {
+            this.$el.style[key] = styles[key]
+        })
+    }
+
+    addClass(className) {
+        this.$el.classList.add(className)
+    }
+
     append(node) {
         if (node instanceof Dom) {
             node = node.$el

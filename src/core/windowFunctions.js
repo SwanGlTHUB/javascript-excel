@@ -3,3 +3,7 @@ export function windowSetProperties(properties) {
         window[key] = properties[key]
     })
 }
+
+export function elementExistInWindow(element) {
+    return element in window
+}

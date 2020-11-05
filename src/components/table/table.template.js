@@ -3,9 +3,9 @@ const CODES = {
     Z: 90,
 }
 
-function toCell() {
+function toCell(index) {
     return `
-    <div class="cell" contenteditable></div>
+    <div class="cell" data-id=${index} contenteditable></div>
   `
 }
 
@@ -60,8 +60,14 @@ export function createTable(rowsCount = 15) {
     rows.push(createRow(null, cols))
 
     for (let i = 0; i < rowsCount; i++) {
-        const cells = new Array(colsCount).fill("").map(toCell).join("")
-
+        const cells = new Array(colsCount)
+            .fill("")
+            .map((_, index) => {
+                const column = String.fromCharCode(CODES.A + index)
+                const row = i + 1
+                return toCell(row + column)
+            })
+            .join("")
         rows.push(createRow(i + 1, cells))
     }
 
