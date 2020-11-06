@@ -1,12 +1,15 @@
-import { $ } from "../../core/dom"
 import { DomListener } from "../../core/DomListener"
-import { Formula } from "../formula/Formula"
 import {
     ArrowDownProcessor,
     ArrowLeftProcessor,
     ArrowRightProcessor,
     ArrowUpProcessor,
+    clearSelectedCell,
+    clearSelectedCells,
+    getAllCellsInRectangle,
+    getCellID,
     selectCell,
+    sellectCellGroup,
 } from "./TableSelection.logic"
 export class TableSelection extends DomListener {
     static className = "excel__table"
@@ -20,7 +23,27 @@ export class TableSelection extends DomListener {
     onMousedown(event) {
         switch (event.target.className) {
             case "cell":
+                clearSelectedCells()
                 selectCell(event.target)
+                const table = document.querySelector(".excel__table")
+                table.onmouseover = (event) => {
+                    switch (event.target.className) {
+                        case "cell":
+                            const selectedCell = window.selectedCell
+                            const selectedCellID = getCellID(selectedCell)
+                            const hoveredCell = event.target
+                            const hoveredCellID = getCellID(hoveredCell)
+                            const subTable = getAllCellsInRectangle(
+                                selectedCellID,
+                                hoveredCellID
+                            )
+                            clearSelectedCells()
+                            sellectCellGroup(subTable)
+                    }
+                }
+                table.onmouseup = function(event) {
+                    this.onmouseover = null
+                }
             default:
                 return
         }
