@@ -2,7 +2,7 @@ import { CODES } from "../variables"
 
 function toCell(index) {
     return `
-    <div class="cell" data-id=${index} contenteditable></div>
+    <div class="cell" data-id=${index}></div>
   `
 }
 

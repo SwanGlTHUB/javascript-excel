@@ -9,12 +9,14 @@ import {
 } from "./triggerLogic"
 import { TableSelection } from "./TableSelection"
 import { ROWS_COUNT } from "../variables"
+import { CellResizing } from "./CellResizing"
 
 export class Table extends ExcelComponent {
     static className = "excel__table"
 
     constructor($root) {
         Table.initTableSelection($root)
+        Table.initCellResizing($root)
         super($root, {
             name: "Table",
             listeners: ["mousedown", "mouseup"],
@@ -24,6 +26,11 @@ export class Table extends ExcelComponent {
     static initTableSelection($root) {
         const tableSelection = new TableSelection($root)
         tableSelection.init()
+    }
+
+    static initCellResizing($root) {
+        const cellResizing = new CellResizing($root)
+        cellResizing.init()
     }
 
     onMousemove(event) {

@@ -1,4 +1,11 @@
 import { DomListener } from "../../core/DomListener"
+import { getTextWidth } from "../../core/someFunctions"
+import {
+    elementExistInWindow,
+    windowSetProperties,
+} from "../../core/windowFunctions"
+import { CellResizing } from "./CellResizing"
+import { cellResizing, cellResizingBackup } from "./CellResizingLogic"
 import {
     ArrowDownProcessor,
     ArrowLeftProcessor,
@@ -12,7 +19,7 @@ import {
     sellectCellGroup,
 } from "./TableSelection.logic"
 export class TableSelection extends DomListener {
-    static className = "excel__table"
+    static className = ""
     static $formula = ""
 
     constructor($root) {
@@ -23,6 +30,23 @@ export class TableSelection extends DomListener {
     onMousedown(event) {
         switch (event.target.className) {
             case "cell":
+                if (!event.shiftKey) {
+                    return
+                }
+                event.target.setAttribute("contenteditable", true)
+                if (elementExistInWindow("selectedCell")) {
+                    if (event.target != window.selectedCell) {
+                        const previousCell = window.selectedCell
+                        previousCell.setAttribute("contenteditable", false)
+                        const previousCellID = window.selectedCell.getAttribute(
+                            "data-id"
+                        )
+                        cellResizingBackup(
+                            previousCellID,
+                            window.lastCellTextWidth
+                        )
+                    }
+                }
                 clearSelectedCells()
                 selectCell(event.target)
                 const table = document.querySelector(".excel__table")
@@ -51,29 +75,46 @@ export class TableSelection extends DomListener {
 
     onKeydown(event) {
         const keys = ["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight"]
+        const shiftKeyIsPressed = event.shiftKey
+        if (!shiftKeyIsPressed) {
+            return
+        }
+        if (!keys.find((el) => el == event.key)) {
+            return
+        }
+        if (elementExistInWindow("selectedCell")) {
+            const previousCellID = window.selectedCell.getAttribute("data-id")
+            cellResizingBackup(previousCellID, window.lastCellTextWidth)
+        }
+        clearSelectedCells()
+        var newCell
         switch (event.key) {
             case "ArrowRight":
-                ArrowRightProcessor()
+                newCell = ArrowRightProcessor()
                 break
             case "ArrowLeft":
-                ArrowLeftProcessor()
+                newCell = ArrowLeftProcessor()
                 break
             case "ArrowUp":
-                ArrowUpProcessor()
+                newCell = ArrowUpProcessor()
                 break
             case "ArrowDown":
-                ArrowDownProcessor()
+                newCell = ArrowDownProcessor()
                 break
             default:
                 break
         }
+        const textWidth = getTextWidth(newCell.innerHTML)
+        const cellID = newCell.getAttribute("data-id")
+        const lastCellTextWidth = window.lastCellTextWidth
+        cellResizing(cellID, textWidth)
+        const windowProperties = {
+            lastCellTextWidth: textWidth,
+        }
+        windowSetProperties(windowProperties)
     }
 
     init() {
         this.initDOMListeners()
-    }
-
-    toHTML() {
-        return createTable(20)
     }
 }
