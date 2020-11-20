@@ -157,8 +157,6 @@ export function clearSelectedCell() {
         return
     }
     const selectedCell = window.selectedCell
-    console.log("ok")
-    console.log(selectedCell)
     selectedCell.style.backgroundColor = "white"
     selectedCell.style.border = null
 }
@@ -186,6 +184,7 @@ export function ArrowRightProcessor() {
     const newID = row + nextLetter(column)
     const newCell = getCellByID(newID)
     selectCell(newCell)
+    return newCell
 }
 
 export function ArrowLeftProcessor() {
@@ -195,6 +194,7 @@ export function ArrowLeftProcessor() {
     const newID = row + previousLetter(column)
     const newCell = getCellByID(newID)
     selectCell(newCell)
+    return newCell
 }
 
 export function ArrowUpProcessor() {
@@ -204,6 +204,7 @@ export function ArrowUpProcessor() {
     const newID = previousRow(row) + column
     const newCell = getCellByID(newID)
     selectCell(newCell)
+    return newCell
 }
 
 export function ArrowDownProcessor() {
@@ -213,4 +214,5 @@ export function ArrowDownProcessor() {
     const newID = nextRow(row) + column
     const newCell = getCellByID(newID)
     selectCell(newCell)
+    return newCell
 }
