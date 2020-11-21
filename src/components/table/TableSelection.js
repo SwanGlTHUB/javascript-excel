@@ -106,6 +106,7 @@ export class TableSelection extends DomListener {
             default:
                 break
         }
+
         newCell.setAttribute("contenteditable", true)
         newCell.focus()
         const textWidth = getTextWidth(newCell.innerHTML)
