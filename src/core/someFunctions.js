@@ -39,3 +39,17 @@ export function getTextWidth(text) {
     excelEl.removeChild(fakeDivWrapper)
     return width
 }
+
+export function getTextHeight(text) {
+    const fakeDivWrapper = document.createElement("div")
+    const fakeDiv = document.createElement("div")
+    fakeDivWrapper.style.display = "flex"
+    fakeDiv.innerHTML = text
+    fakeDiv.className = "cell selected"
+    fakeDivWrapper.appendChild(fakeDiv)
+    const excelEl = document.querySelector(".excel")
+    excelEl.appendChild(fakeDivWrapper)
+    const height = fakeDiv.offsetHeight
+    excelEl.removeChild(fakeDivWrapper)
+    return height
+}

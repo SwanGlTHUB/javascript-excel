@@ -1,5 +1,5 @@
 import { DomListener } from "../../core/DomListener"
-import { getTextWidth } from "../../core/someFunctions"
+import { getTextHeight, getTextWidth } from "../../core/someFunctions"
 import {
     elementExistInWindow,
     windowSetProperties,
@@ -43,7 +43,8 @@ export class TableSelection extends DomListener {
                         )
                         cellResizingBackup(
                             previousCellID,
-                            window.lastCellTextWidth
+                            window.lastCellTextWidth,
+                            0
                         )
                     }
                 }
@@ -84,7 +85,8 @@ export class TableSelection extends DomListener {
         }
         if (elementExistInWindow("selectedCell")) {
             const previousCellID = window.selectedCell.getAttribute("data-id")
-            cellResizingBackup(previousCellID, window.lastCellTextWidth)
+            window.selectedCell.setAttribute("contenteditable", false)
+            cellResizingBackup(previousCellID, window.lastCellTextWidth, 0)
         }
         clearSelectedCells()
         var newCell
@@ -104,10 +106,14 @@ export class TableSelection extends DomListener {
             default:
                 break
         }
+
+        newCell.setAttribute("contenteditable", true)
+        newCell.focus()
         const textWidth = getTextWidth(newCell.innerHTML)
+        const textHeight = getTextHeight(newCell.innerHTML)
         const cellID = newCell.getAttribute("data-id")
         const lastCellTextWidth = window.lastCellTextWidth
-        cellResizing(cellID, textWidth)
+        cellResizing(cellID, textWidth, textHeight)
         const windowProperties = {
             lastCellTextWidth: textWidth,
         }

@@ -78,8 +78,10 @@
         white-space: nowrap;
         outline: none;
         overflow-x: hidden;
+        overflow-y: hidden;
         &.selected {
             overflow-x: initial;
+            overflow-y: initial;
             border: 1px solid blue;
             z-index: 2;
         }

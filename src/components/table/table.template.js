@@ -15,9 +15,9 @@ function toColumn(col) {
   `
 }
 
-function createRow(index, content) {
+function createRow(index, content, rowID) {
     return `
-    <div class="row">
+    <div class="row" row-id=${rowID}>
       <div class="row-info">
         <div class=row-info-value>${index ? index : ""}</div>
         ${index ? `<div class=triggerY></div>` : ""}
@@ -54,7 +54,7 @@ export function createTable(rowsCount = 15) {
         .map(toColumn)
         .join("")
 
-    rows.push(createRow(null, cols))
+    rows.push(createRow(null, cols, 0))
 
     for (let i = 0; i < rowsCount; i++) {
         const cells = new Array(colsCount)
@@ -65,7 +65,7 @@ export function createTable(rowsCount = 15) {
                 return toCell(row + column)
             })
             .join("")
-        rows.push(createRow(i + 1, cells))
+        rows.push(createRow(i + 1, cells, rows.length))
     }
 
     return rows.join("")

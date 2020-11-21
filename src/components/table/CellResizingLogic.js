@@ -1,6 +1,11 @@
 import { nextInRow } from "../../core/someFunctions"
-import { getCellByID, getCellID } from "./TableSelection.logic"
-export function cellResizing(cellID, CellTextWidth) {
+import { CELL_PADDING } from "../variables"
+import { getCellByID, getCellCoords, getCellID } from "./TableSelection.logic"
+export function cellResizing(cellID, CellTextWidth, cellTextHeight) {
+    const [rowID, _] = getCellCoords(cellID)
+    const row = document.querySelector(`[row-id="${rowID}"]`)
+    row.style.height =
+        cellTextHeight == 0 ? 24 + "px" : 9 + cellTextHeight + "px"
     while (CellTextWidth) {
         const cell = getCellByID(cellID)
         if (CellTextWidth < cell.offsetWidth) {
@@ -18,9 +23,13 @@ export function cellResizing(cellID, CellTextWidth) {
     }
 }
 
-export function cellResizingBackup(cellID, CellTextWidth) {
+export function cellResizingBackup(cellID, CellTextWidth, cellTextHeight) {
     var prevLastCell = null
     var lastCell = null
+    const [rowID, _] = getCellCoords(cellID)
+    const row = document.querySelector(`[row-id="${rowID}"]`)
+    row.style.height =
+        cellTextHeight == 0 ? 24 + "px" : 9 + cellTextHeight + "px"
     while (CellTextWidth) {
         const cell = getCellByID(cellID)
         if (CellTextWidth < cell.offsetWidth) {
