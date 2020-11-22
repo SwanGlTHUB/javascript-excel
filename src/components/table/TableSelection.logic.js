@@ -73,17 +73,19 @@ export function selectCell(cell) {
 export function getAllCellsInRectangle(selectedCell, hoveredCell) {
     var [startRow, startColumn] = getCellCoords(selectedCell)
     var [finishRow, finishColumn] = getCellCoords(hoveredCell)
-    if (startRow > finishRow) {;
-        [startRow, finishRow] = [finishRow, startRow]
+    if (startRow > finishRow) {
+        ;[startRow, finishRow] = [finishRow, startRow]
     }
-    if (startColumn > finishColumn) {;
-        [startColumn, finishColumn] = [finishColumn, startColumn]
+    if (startColumn > finishColumn) {
+        ;[startColumn, finishColumn] = [finishColumn, startColumn]
     }
     var table = []
     for (let rowIndex = startRow; rowIndex <= finishRow; rowIndex++) {
         var row = []
         for (
-            let columnIndex = startColumn.charCodeAt(); columnIndex <= finishColumn.charCodeAt(); columnIndex++
+            let columnIndex = startColumn.charCodeAt();
+            columnIndex <= finishColumn.charCodeAt();
+            columnIndex++
         ) {
             const cellID = rowIndex + getCellSymbolByNum(columnIndex)
             row.push(cellID)
@@ -157,7 +159,7 @@ export function clearSelectedCell() {
         return
     }
     const selectedCell = window.selectedCell
-    selectedCell.style.backgroundColor = "white"
+    selectedCell.style.backgroundColor = null
     selectedCell.style.border = null
 }
 

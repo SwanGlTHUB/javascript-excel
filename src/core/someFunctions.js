@@ -53,3 +53,10 @@ export function getTextHeight(text) {
     excelEl.removeChild(fakeDivWrapper)
     return height
 }
+
+export function setElementStyle(element, style, className) {
+    if (className) {
+        element.className = className
+    }
+    element.style = { ...element.style, ...style }
+}
