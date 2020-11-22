@@ -1,17 +1,11 @@
 import { DomListener } from "../../core/DomListener"
-import { getTextHeight, getTextWidth } from "../../core/someFunctions"
-import {
-    elementExistInWindow,
-    windowSetProperties,
-} from "../../core/windowFunctions"
-import { CellResizing } from "./CellResizing"
+import { elementExistInWindow } from "../../core/windowFunctions"
 import { cellResizing, cellResizingBackup } from "./CellResizingLogic"
 import {
     ArrowDownProcessor,
     ArrowLeftProcessor,
     ArrowRightProcessor,
     ArrowUpProcessor,
-    clearSelectedCell,
     clearSelectedCells,
     getAllCellsInRectangle,
     getCellID,
@@ -41,11 +35,8 @@ export class TableSelection extends DomListener {
                         const previousCellID = window.selectedCell.getAttribute(
                             "data-id"
                         )
-                        cellResizingBackup(
-                            previousCellID,
-                            window.lastCellTextWidth,
-                            0
-                        )
+                        console.log("qwe")
+                        cellResizingBackup(previousCellID)
                     }
                 }
                 clearSelectedCells()
@@ -66,7 +57,7 @@ export class TableSelection extends DomListener {
                             sellectCellGroup(subTable)
                     }
                 }
-                table.onmouseup = function(event) {
+                table.onmouseup = function (event) {
                     this.onmouseover = null
                 }
             default:
@@ -109,15 +100,9 @@ export class TableSelection extends DomListener {
 
         newCell.setAttribute("contenteditable", true)
         newCell.focus()
-        const textWidth = getTextWidth(newCell.innerHTML)
-        const textHeight = getTextHeight(newCell.innerHTML)
         const cellID = newCell.getAttribute("data-id")
-        const lastCellTextWidth = window.lastCellTextWidth
-        cellResizing(cellID, textWidth, textHeight)
-        const windowProperties = {
-            lastCellTextWidth: textWidth,
-        }
-        windowSetProperties(windowProperties)
+        cellResizingBackup(cellID)
+        cellResizing(cellID)
     }
 
     init() {
